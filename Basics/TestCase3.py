@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 # Initialize the driver
-driver = webdriver.Chrome()  # Ensure that your chromedriver is correctly set up
+driver = webdriver.Edge()  # Ensure that your chromedriver is correctly set up
 driver.maximize_window()
 
 # Open the website
@@ -32,14 +32,14 @@ userSelect = wait.until(EC.visibility_of_element_located((By.XPATH, "//select[co
 
 # customer page actions
 userSelect_selector = Select(userSelect)
-userSelect_selector.select_by_visible_text("Hermoine Granger")
+userSelect_selector.select_by_visible_text("Ron Weasly")
 
 # Customer page web elements
 customerLoginSelectedUserBtn = wait.until(
     EC.element_to_be_clickable((By.XPATH, "//button[@class='btn btn-default'][contains(.,'Login')]")))
 customerLoginSelectedUserBtn.click()
 
-time.sleep(5)
+time.sleep(3)
 
 # account page web elements
 noAccountSelector = wait.until(EC.element_to_be_clickable((By.XPATH, "//select[contains(@ng-hide,'noAccount')]")))
@@ -67,11 +67,10 @@ depositButton_element.click()
 depositAmount_element = wait.until(EC.element_to_be_clickable((By.XPATH, "//input[contains(@type,'number')]")))
 submitDepositButton_element = wait.until(
     EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][contains(.,'Deposit')]")))
-withdrawalAmountButton_element = wait.until(
-    EC.element_to_be_clickable((By.XPATH, "//button[@ng-class='btnClass3'][contains(.,'Withdrawl')]")))
 
 depositAmount_element.send_keys("31459")
 submitDepositButton_element.click()
+time.sleep(1)
 
 # Account page web element
 depositSuccessfulText_element = wait.until(EC.visibility_of_element_located(
@@ -79,10 +78,26 @@ depositSuccessfulText_element = wait.until(EC.visibility_of_element_located(
 
 assert depositSuccessfulText_element == "Deposit Successful", "The amount was not deposited into the account"
 
+# Transaction page web element
 transactionButton_element = wait.until(
     EC.element_to_be_clickable((By.XPATH, "//button[@ng-class='btnClass1'][contains(.,'Transactions')]")))
 
+transactionButton_element.click()
+time.sleep(3)
+
+# transaction page web elements
+depositedAmountText_element = wait.until(
+    EC.visibility_of_element_located((By.XPATH, "//td[@class='ng-binding'][contains(.,'31459')]"))).text
+backButton_element = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@class='btn'][contains(.,'Back')]")))
+
+assert depositedAmountText_element == "31459", "The deposit you made was not successful"
+backButton_element.click()
+
+time.sleep(3)
+
 # Withdrawal action
+withdrawalAmountButton_element = wait.until(
+    EC.element_to_be_clickable((By.XPATH, "//button[@ng-class='btnClass3'][contains(.,'Withdrawl')]")))
 withdrawalAmountButton_element.click()
 
 time.sleep(3)
@@ -94,9 +109,8 @@ submitWithdrawalButton = wait.until(
 withdrawalAmount.send_keys("31459")
 submitWithdrawalButton.click()
 
-# logging out of the account
+time.sleep(13)
+
 logoutButton_element = wait.until(
     EC.element_to_be_clickable((By.XPATH, "//button[@ng-show='logout'][contains(.,'Logout')]")))
-# logoutButton_element.click()
-
-time.sleep(5)
+logoutButton_element.click()

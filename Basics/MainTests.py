@@ -75,6 +75,17 @@ logoutButton_element = wait.until(
     EC.element_to_be_clickable((By.XPATH, "//button[@ng-show='logout'][contains(.,'Logout')]")))
 
 assert depositSuccessfulText_element == "Deposit Successful", "The amount was not deposited into the account"
-logoutButton_element.click()
+# logoutButton_element.click()
 
 time.sleep(5)
+
+transactionButton_element = wait.until(
+    EC.element_to_be_clickable((By.XPATH, "//button[@ng-class='btnClass1'][contains(.,'Transactions')]")))
+
+transactionButton_element.click()
+
+time.sleep(10)
+# transaction page web elements
+depositedAmount_element = wait.until(
+    EC.element_to_be_clickable((By.XPATH, "(//td[@class='ng-binding'][contains(.,'4')])[1]")))
+assert depositedAmount_element == "31459", "The deposit you made was not successful"
