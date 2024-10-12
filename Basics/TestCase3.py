@@ -79,14 +79,24 @@ depositSuccessfulText_element = wait.until(EC.visibility_of_element_located(
 
 assert depositSuccessfulText_element == "Deposit Successful", "The amount was not deposited into the account"
 
+transactionButton_element = wait.until(
+    EC.element_to_be_clickable((By.XPATH, "//button[@ng-class='btnClass1'][contains(.,'Transactions')]")))
+
 # Withdrawal action
 withdrawalAmountButton_element.click()
 
+time.sleep(3)
 
+withdrawalAmount = wait.until(EC.element_to_be_clickable((By.XPATH, "//input[contains(@type,'number')]")))
+submitWithdrawalButton = wait.until(
+    EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][contains(.,'Withdraw')]")))
+
+withdrawalAmount.send_keys("31459")
+submitWithdrawalButton.click()
 
 # logging out of the account
 logoutButton_element = wait.until(
     EC.element_to_be_clickable((By.XPATH, "//button[@ng-show='logout'][contains(.,'Logout')]")))
-logoutButton_element.click()
+# logoutButton_element.click()
 
 time.sleep(5)
