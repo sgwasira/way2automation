@@ -64,6 +64,7 @@ currentAccountBalance = driver.find_element(By.XPATH, "(//strong[@class='ng-bind
 depositButton_element.click()
 
 # Account page web element
+# depositing into acc
 depositAmount_element = wait.until(EC.element_to_be_clickable((By.XPATH, "//input[contains(@type,'number')]")))
 submitDepositButton_element = wait.until(
     EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][contains(.,'Deposit')]")))
@@ -71,14 +72,19 @@ submitDepositButton_element = wait.until(
 depositAmount_element.send_keys("31459")
 submitDepositButton_element.click()
 time.sleep(1)
+# end of depositing into acc
+
 
 # Account page web element
+# Asserting if the transaction was successful
 depositSuccessfulText_element = wait.until(EC.visibility_of_element_located(
     (By.XPATH, "//span[@class='error ng-binding'][contains(.,'Deposit Successful')]"))).text
 
-assert depositSuccessfulText_element == "Deposit Successful", "The amount was not deposited into the account"
+assert depositSuccessfulText_element == "Deposit Successful"
+# End of assert
 
-# Transaction page web element
+# Transaction page web
+# Verify that the transaction appears on the ListTx page
 transactionButton_element = wait.until(
     EC.element_to_be_clickable((By.XPATH, "//button[@ng-class='btnClass1'][contains(.,'Transactions')]")))
 
@@ -92,10 +98,13 @@ backButton_element = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[
 
 assert depositedAmountText_element == "31459", "The deposit you made was not successful"
 backButton_element.click()
+# End of Validate of transaction
 
 time.sleep(3)
 
+# transaction page web
 # Withdrawal action
+
 withdrawalAmountButton_element = wait.until(
     EC.element_to_be_clickable((By.XPATH, "//button[@ng-class='btnClass3'][contains(.,'Withdrawl')]")))
 withdrawalAmountButton_element.click()
@@ -108,9 +117,35 @@ submitWithdrawalButton = wait.until(
 
 withdrawalAmount.send_keys("31459")
 submitWithdrawalButton.click()
+time.sleep(2)
 
-time.sleep(13)
+# End of withdraw
+transactionButton_element = wait.until(
+    EC.element_to_be_clickable((By.XPATH, "//button[@ng-class='btnClass1'][contains(.,'Transactions')]")))
+transactionButton_element.click()
+time.sleep(2)
 
+# Verify that the withdrawal transaction was successful
+
+withdrawalTransactionType_element = wait.until(EC.visibility_of_element_located((By.XPATH, "//td[@class='ng-binding'][contains(.,'Debit')]"))).text
+assert withdrawalTransactionType_element == 'Debit', 'The withdrawal you made was not successful'
+
+backButton_element = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@class='btn'][contains(.,'Back')]")))
+backButton_element.click()
+
+# end of verification
+time.sleep(2)
+
+# Verify the that the current balance is the same with the original
+currentAccountBalanceAfterWithdrawal = wait.until(
+    EC.visibility_of_element_located((By.XPATH, "(//strong[@class='ng-binding'][contains(.,'0')])[2]"))).text
+
+assert currentAccountBalance == currentAccountBalanceAfterWithdrawal, 'The balances are not the same '
+# End of verification
+
+time.sleep(2)
+
+# logging out of the system
 logoutButton_element = wait.until(
     EC.element_to_be_clickable((By.XPATH, "//button[@ng-show='logout'][contains(.,'Logout')]")))
 logoutButton_element.click()
