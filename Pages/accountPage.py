@@ -1,0 +1,16 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
+class AccountPage:
+    noAccountSelector_xpath = "//select[contains(@ng-hide,'noAccount')]"
+    depositAmount_xpath = "//input[contains(@type,'number')]"
+    depositButton_xpath = "//button[@ng-class='btnClass2'][contains(.,'Deposit')]"
+    submitDepositButton_xpath = "//button[@type='submit'][contains(.,'Deposit')]"
+
+    def __init__(self, driver):
+        self.driver = driver
+
+
