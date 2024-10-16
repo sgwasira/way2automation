@@ -30,4 +30,16 @@ class AccountPage:
 
     def selectAccount(self, accountNumber):
         wait = WebDriverWait(self.driver, 10)
+        noAccountSelector = wait.until(EC.element_to_be_clickable((By.XPATH,self.noAccountSelector_xpath)))
+
+        # initialise Select class
+        noAccount = Select(noAccountSelector)
+
+        # getting the total number of options
+        option = noAccount.options
+
+        total_options = len(option)
+
+        # Selecting the first options
+        noAccount.select_by_index(accountNumber)
 
