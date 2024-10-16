@@ -18,6 +18,16 @@ class AccountPage:
         depositButton = wait.until(EC.element_to_be_clickable((By.XPATH, self.depositButton_xpath)))
         depositButton.click()
 
+    def clickSubmitDepositButton(self):
+        wait = WebDriverWait(self.driver, 10)
+        submitDepositButton = wait.until(EC.element_to_be_clickable((By.XPATH,self.submitDepositButton_xpath)))
+        submitDepositButton.click()
+
+    def enterDepositAmount(self, amount):
+        wait = WebDriverWait(self.driver,10)
+        depositAmount = wait.until(EC.element_to_be_clickable((By.XPATH,self.depositAmount_xpath)))
+        depositAmount.send_keys(amount)
+
 
 
 
