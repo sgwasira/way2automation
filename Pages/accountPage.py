@@ -11,7 +11,7 @@ class AccountPage:
     submitDepositButton_xpath = "//button[@type='submit'][contains(.,'Deposit')]"
 
     def __init__(self, driver):
-        self.driver =
+        self.driver = driver
 
     def clickDepositMenuButton(self):
         wait = WebDriverWait(self.driver, 10)
@@ -20,17 +20,14 @@ class AccountPage:
 
     def clickSubmitDepositButton(self):
         wait = WebDriverWait(self.driver, 10)
-        submitDepositButton = wait.until(EC.element_to_be_clickable((By.XPATH,self.submitDepositButton_xpath)))
+        submitDepositButton = wait.until(EC.element_to_be_clickable((By.XPATH, self.submitDepositButton_xpath)))
         submitDepositButton.click()
 
     def enterDepositAmount(self, amount):
-        wait = WebDriverWait(self.driver,10)
-        depositAmount = wait.until(EC.element_to_be_clickable((By.XPATH,self.depositAmount_xpath)))
+        wait = WebDriverWait(self.driver, 10)
+        depositAmount = wait.until(EC.element_to_be_clickable((By.XPATH, self.depositAmount_xpath)))
         depositAmount.send_keys(amount)
 
-
-
-
-
-
+    def selectAccount(self, accountNumber):
+        wait = WebDriverWait(self.driver, 10)
 
