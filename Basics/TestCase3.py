@@ -127,7 +127,8 @@ time.sleep(2)
 
 # Verify that the withdrawal transaction was successful
 
-withdrawalTransactionType_element = wait.until(EC.visibility_of_element_located((By.XPATH, "//td[@class='ng-binding'][contains(.,'Debit')]"))).text
+withdrawalTransactionType_element = wait.until(
+    EC.visibility_of_element_located((By.XPATH, "//td[@class='ng-binding'][contains(.,'Debit')]"))).text
 assert withdrawalTransactionType_element == 'Debit', 'The withdrawal you made was not successful'
 
 backButton_element = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@class='btn'][contains(.,'Back')]")))
