@@ -9,6 +9,9 @@ class AccountPage:
     depositAmount_xpath = "//input[contains(@type,'number')]"
     depositButton_xpath = "//button[@ng-class='btnClass2'][contains(.,'Deposit')]"
     submitDepositButton_xpath = "//button[@type='submit'][contains(.,'Deposit')]"
+    transactionButton_xpath = "//button[@ng-class='btnClass1'][contains(.,'Transactions')]"
+    withdrawalButton_xpath = "//button[@ng-class='btnClass3'][contains(.,'Withdrawl')]"
+    startingBalance_xpath = "//strong[@class='ng-binding'][contains(.,'31515')]"
 
     def __init__(self, driver):
         self.driver = driver
@@ -30,7 +33,7 @@ class AccountPage:
 
     def selectAccount(self, accountNumber):
         wait = WebDriverWait(self.driver, 10)
-        noAccountSelector = wait.until(EC.element_to_be_clickable((By.XPATH,self.noAccountSelector_xpath)))
+        noAccountSelector = wait.until(EC.element_to_be_clickable((By.XPATH, self.noAccountSelector_xpath)))
 
         # initialise Select class
         noAccount = Select(noAccountSelector)
@@ -42,4 +45,16 @@ class AccountPage:
 
         # Selecting the first options
         noAccount.select_by_index(accountNumber)
+
+    def clickWithdrawalButton(self):
+        wait = WebDriverWait(self.driver, 10)
+        withdrawalButton = wait.until(EC.element_to_be_clickable((By.XPATH, self.withdrawalButton_xpath)))
+        withdrawalButton.click()
+
+    def clickTransactionButton(self):
+        wait = WebDriverWait(self.driver, 10)
+        withdrawalButton = wait.until(EC.element_to_be_clickable((By.XPATH, self.withdrawalButton_xpath)))
+        withdrawalButton.click()
+
+        
 
