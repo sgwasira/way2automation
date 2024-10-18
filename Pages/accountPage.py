@@ -12,6 +12,8 @@ class AccountPage:
     transactionButton_xpath = "//button[@ng-class='btnClass1'][contains(.,'Transactions')]"
     withdrawalButton_xpath = "//button[@ng-class='btnClass3'][contains(.,'Withdrawl')]"
     startingBalance_xpath = "//strong[@class='ng-binding'][contains(.,'31515')]"
+    logoutButton_xpath = "//button[@ng-show='logout'][contains(.,'Logout')]"
+    depositSuccessfulText_xpath = "//button[@ng-show='logout'][contains(.,'Logout')]"
 
     def __init__(self, driver):
         self.driver = driver
@@ -56,5 +58,15 @@ class AccountPage:
         withdrawalButton = wait.until(EC.element_to_be_clickable((By.XPATH, self.withdrawalButton_xpath)))
         withdrawalButton.click()
 
-        
+    def clickLogoutButton(self):
+        wait = WebDriverWait(self.driver, 10)
+        logoutButton = wait.until(EC.element_to_be_clickable((By.XPATH, self.logoutButton_xpath)))
+        logoutButton.click()
+
+    def getDepositSuccessfulText(self):
+        wait = WebDriverWait(self.driver, 20)
+        depositSuccessfulText = wait.until(
+            EC.visibility_of_element_located((By.XPATH, self.depositSuccessfulText_xpath)))
+        depositSuccessfulText.is_displayed()
+
 

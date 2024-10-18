@@ -1,0 +1,1 @@
+pytest -s -v -m"endToEnd" --alluredir="allure-results" --browser chrome
