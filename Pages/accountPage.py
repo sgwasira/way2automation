@@ -87,7 +87,7 @@ class AccountPage:
         while i < numberOfAmount:
             # Selecting the account options
             noAccount.select_by_index(i)
-            depositAmount = wait.until(EC.element_to_be_clickable((By.XPATH, self.depositAmount_xpath)))
+            depositAmount = wait.until(EC.element_to_be_clickable((By.XPATH, self.transAmount_xpath)))
             depositAmount.send_keys(amount)
             time.sleep(2)
             submitDepositButton.click()

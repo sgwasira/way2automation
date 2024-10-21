@@ -53,6 +53,7 @@ class Test_01_endToEnd:
         self.account.clickLogoutButton()
 
     @pytest.mark.Test2
+    @pytest.mark.endToEnd
     @allure.severity(allure.severity_level.CRITICAL)
     def test_02Test(self, setup):
         self.driver = setup
@@ -83,6 +84,7 @@ class Test_01_endToEnd:
         self.account.clickLogoutButton()
 
     @pytest.mark.Test3
+    @pytest.mark.endToEnd
     @allure.severity(allure.severity_level.CRITICAL)
     def test_03Test(self, setup):
         self.driver = setup
