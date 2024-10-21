@@ -7,6 +7,7 @@ from allure_commons.types import AttachmentType
 from Pages.accountPage import AccountPage
 from Pages.customerPage import CustomerPage
 from Pages.loginPage import LoginPage
+from Pages.listTxPage import ListTxPage
 
 from Utils.readProperties_UrlDetails import ReadLoginConfig
 
@@ -103,17 +104,37 @@ class Test_01_endToEnd:
         time.sleep(2)
 
         self.account = AccountPage(self.driver)
+        startingBalance = self.account.getStartingBalance()
         self.account.clickDepositMenuButton()
         time.sleep(2)
         self.account.enterTransAmount(self.withdrawalAmount)
         time.sleep(2)
         self.account.clickSubmitDepositButton()
         time.sleep(2)
+
         self.account.clickTransactionButton()
         time.sleep(2)
+        self.listTx = ListTxPage(self.driver)
+        self.listTx.verifyCreditTransaction()
+        self.listTx.clickBackButton()
+
+        self.account = AccountPage(self.driver)
         self.account.clickWithdrawalButton()
         time.sleep(2)
         self.account.enterTransAmount(self.withdrawalAmount)
         time.sleep(2)
         self.account.clickSubmitWithdrawButton()
         time.sleep(2)
+        self.account.clickTransactionButton()
+        time.sleep(2)
+
+        self.listTx = ListTxPage(self.driver)
+        self.listTx.verifyDebitTransaction()
+        self.listTx.clickBackButton()
+
+        self.account = AccountPage(self.driver)
+        self.account.verifyBalanceAfterWithdrawal(startingBalance)
+        time.sleep(2)
+        self.account.clickLogoutButton()
+
+
