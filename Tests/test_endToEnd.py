@@ -116,6 +116,8 @@ class Test_01_endToEnd:
         time.sleep(2)
         self.listTx = ListTxPage(self.driver)
         self.listTx.verifyCreditTransaction()
+        allure.attach(self.driver.get_screenshot_as_png(), name="CreditTransaction_Test03",
+                      attachment_type=AttachmentType.PNG)
         self.listTx.clickBackButton()
 
         self.account = AccountPage(self.driver)
@@ -125,6 +127,8 @@ class Test_01_endToEnd:
         time.sleep(2)
         self.account.clickSubmitWithdrawButton()
         time.sleep(2)
+        allure.attach(self.driver.get_screenshot_as_png(), name="DebitTransaction_Test03",
+                      attachment_type=AttachmentType.PNG)
         self.account.clickTransactionButton()
         time.sleep(2)
 
