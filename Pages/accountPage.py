@@ -10,6 +10,7 @@ class AccountPage:
     transAmount_xpath = "//input[contains(@type,'number')]"
     depositButton_xpath = "//button[@ng-class='btnClass2'][contains(.,'Deposit')]"
     submitDepositButton_xpath = "//button[@type='submit'][contains(.,'Deposit')]"
+    submitWithdrawButton_xpath = "//button[@type='submit'][contains(.,'Withdraw')]"
     transactionButton_xpath = "//button[@ng-class='btnClass1'][contains(.,'Transactions')]"
     withdrawalButton_xpath = "//button[@ng-class='btnClass3'][contains(.,'Withdrawl')]"
     startingBalance_xpath = "(//strong[@class='ng-binding'][contains(.,'0')])[2]"
@@ -29,10 +30,15 @@ class AccountPage:
         submitDepositButton = wait.until(EC.element_to_be_clickable((By.XPATH, self.submitDepositButton_xpath)))
         submitDepositButton.click()
 
+    def clickSubmitWithdrawButton(self):
+        wait = WebDriverWait(self.driver, 10)
+        submitWithdrawButton = wait.until(EC.element_to_be_clickable((By.XPATH, self.submitWithdrawButton_xpath)))
+        submitWithdrawButton.click()
+
     def enterTransAmount(self, amount):
         wait = WebDriverWait(self.driver, 10)
-        depositAmount = wait.until(EC.element_to_be_clickable((By.XPATH, self.depositAmount_xpath)))
-        depositAmount.send_keys(amount)
+        transAmount = wait.until(EC.element_to_be_clickable((By.XPATH, self.transAmount_xpath)))
+        transAmount.send_keys(amount)
 
     def clickWithdrawalButton(self):
         wait = WebDriverWait(self.driver, 10)
@@ -41,8 +47,8 @@ class AccountPage:
 
     def clickTransactionButton(self):
         wait = WebDriverWait(self.driver, 10)
-        withdrawalButton = wait.until(EC.element_to_be_clickable((By.XPATH, self.withdrawalButton_xpath)))
-        withdrawalButton.click()
+        transactionButton = wait.until(EC.element_to_be_clickable((By.XPATH, self.transactionButton_xpath)))
+        transactionButton.click()
 
     def clickLogoutButton(self):
         wait = WebDriverWait(self.driver, 10)
