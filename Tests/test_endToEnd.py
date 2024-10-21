@@ -17,6 +17,7 @@ class Test_01_endToEnd:
     clientNameTest02 = ReadLoginConfig().getClientNameTest02()
 
     depositAmount = 1500
+    withdrawalAmount = 314593
 
     @pytest.mark.endToEnd
     @allure.severity(allure.severity_level.CRITICAL)
@@ -42,7 +43,7 @@ class Test_01_endToEnd:
         self.account = AccountPage(self.driver)
         self.account.clickDepositMenuButton()
         time.sleep(2)
-        self.account.enterDepositAmount(self.depositAmount)
+        self.account.enterTransAmount(self.depositAmount)
         time.sleep(2)
         self.account.clickSubmitDepositButton()
         time.sleep(2)
@@ -52,7 +53,7 @@ class Test_01_endToEnd:
 
     @pytest.mark.Test2
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_Test(self, setup):
+    def test_02Test(self, setup):
         self.driver = setup
         self.driver.get(self.way2automationURL)
         self.driver.maximize_window()
@@ -79,3 +80,31 @@ class Test_01_endToEnd:
 
         time.sleep(2)
         self.account.clickLogoutButton()
+
+    @pytest.mark.Test3
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_03Test(self, setup):
+        self.driver = setup
+        self.driver.get(self.way2automationURL)
+        self.driver.maximize_window()
+        self.login = LoginPage(self.driver)
+        self.login.clickLoginButton()
+        allure.attach(self.driver.get_screenshot_as_png(), name="CustomerPage_Test03",
+                      attachment_type=AttachmentType.PNG)
+
+        time.sleep(2)
+
+        self.customer = CustomerPage(self.driver)
+        self.customer.selectUser(self.clientNameTest02)
+        self.customer.clickLoginBtn()
+        allure.attach(self.driver.get_screenshot_as_png(), name="AccountPage_Test03",
+                      attachment_type=AttachmentType.PNG)
+
+        time.sleep(2)
+
+        self.account = AccountPage(self.driver)
+        self.account.clickDepositMenuButton()
+        time.sleep(2)
+        self.account.enterTransAmount(self.withdrawalAmount)
+        time.sleep(2)
+

@@ -7,12 +7,12 @@ import time
 
 class AccountPage:
     noAccountSelector_xpath = "//select[contains(@ng-hide,'noAccount')]"
-    depositAmount_xpath = "//input[contains(@type,'number')]"
+    transAmount_xpath = "//input[contains(@type,'number')]"
     depositButton_xpath = "//button[@ng-class='btnClass2'][contains(.,'Deposit')]"
     submitDepositButton_xpath = "//button[@type='submit'][contains(.,'Deposit')]"
     transactionButton_xpath = "//button[@ng-class='btnClass1'][contains(.,'Transactions')]"
     withdrawalButton_xpath = "//button[@ng-class='btnClass3'][contains(.,'Withdrawl')]"
-    startingBalance_xpath = "//strong[@class='ng-binding'][contains(.,'31515')]"
+    startingBalance_xpath = "(//strong[@class='ng-binding'][contains(.,'0')])[2]"
     logoutButton_xpath = "//button[@ng-show='logout'][contains(.,'Logout')]"
     depositSuccessfulText_xpath = "//span[@class='error ng-binding'][contains(.,'Deposit Successful')]"
 
@@ -29,7 +29,7 @@ class AccountPage:
         submitDepositButton = wait.until(EC.element_to_be_clickable((By.XPATH, self.submitDepositButton_xpath)))
         submitDepositButton.click()
 
-    def enterDepositAmount(self, amount):
+    def enterTransAmount(self, amount):
         wait = WebDriverWait(self.driver, 10)
         depositAmount = wait.until(EC.element_to_be_clickable((By.XPATH, self.depositAmount_xpath)))
         depositAmount.send_keys(amount)
@@ -92,3 +92,15 @@ class AccountPage:
 
             assert depositSuccessfulText_element == "Deposit Successful", "The amount was not deposited into the account"
             i += 1
+
+    def getStartingBalance(self):
+        wait = WebDriverWait(self.driver, 10)
+        startingBalance = wait.until(EC.element_to_be_clickable((By.XPATH, self.startingBalance_xpath))).getText()
+
+        return startingBalance
+
+    def verifyBalanceAfterWithdrawal(self, gStartingBalance):
+        wait = WebDriverWait(self.driver, 10)
+        balanceAfterWithdrawal = wait.until(
+            EC.element_to_be_clickable((By.XPATH, self.startingBalance_xpath))).getText()
+        assert balanceAfterWithdrawal == gStartingBalance, "The amount was not deposited into the account"
