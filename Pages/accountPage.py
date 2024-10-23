@@ -13,7 +13,7 @@ class AccountPage:
     submitWithdrawButton_xpath = "//button[@type='submit'][contains(.,'Withdraw')]"
     transactionButton_xpath = "//button[@ng-class='btnClass1'][contains(.,'Transactions')]"
     withdrawalButton_xpath = "//button[@ng-class='btnClass3'][contains(.,'Withdrawl')]"
-    startingBalance_xpath = "(//strong[@class='ng-binding'][contains(.,'0')])[2]"
+    startingBalance_xpath = "(//strong[contains(@class,'ng-binding')])[2]"
     logoutButton_xpath = "//button[@ng-show='logout'][contains(.,'Logout')]"
     depositSuccessfulText_xpath = "//span[@class='error ng-binding'][contains(.,'Deposit Successful')]"
 
@@ -101,12 +101,13 @@ class AccountPage:
 
     def getStartingBalance(self):
         wait = WebDriverWait(self.driver, 10)
-        startingBalance = wait.until(EC.element_to_be_clickable((By.XPATH, self.startingBalance_xpath))).getText()
+        startingBalance = wait.until(EC.element_to_be_clickable((By.XPATH, self.startingBalance_xpath))).text
 
         return startingBalance
 
     def verifyBalanceAfterWithdrawal(self, gStartingBalance):
         wait = WebDriverWait(self.driver, 10)
         balanceAfterWithdrawal = wait.until(
-            EC.element_to_be_clickable((By.XPATH, self.startingBalance_xpath))).getText()
+            EC.element_to_be_clickable((By.XPATH, self.startingBalance_xpath))).text
         assert balanceAfterWithdrawal == gStartingBalance, "The amount was not deposited into the account"
+
